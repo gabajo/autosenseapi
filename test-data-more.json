@@ -11,6 +11,11 @@
         "price": 1.75,
         "currency": "CHF",
         "product_id": "BENZIN"
+      },
+      {
+        "price": 1.95,
+        "currency": "CHF",
+        "product_id": "DIESEL"
       }
     ],
     "products": [
@@ -20,6 +25,19 @@
           {
             "id": "1",
             "status": "available"
+          },
+          {
+            "id": "2",
+            "status": "available"
+          }
+        ]
+      },
+      {
+        "product_id": "DIESEL",
+        "points": [
+          {
+            "id": "1",
+            "status": "not_available"
           },
           {
             "id": "2",

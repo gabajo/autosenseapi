@@ -2,10 +2,11 @@
   "name": "autosenseapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node ./src/db/databasetest.js && NODE_ENV=development node-dev src/server.js"
+    "dev": "node ./src/db/databasetest.js && NODE_ENV=development node-dev src/server.js",
+    "start": "node ./src/db/databasetest.js && NODE_ENV=production node-dev src/server.js"
   },
   "keywords": [],
   "author": "",

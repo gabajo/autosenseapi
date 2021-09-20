@@ -79,4 +79,20 @@ exports.editProductPrice = (req, res) => {
 
 };
 
+exports.saveStation = (req, res) => {
+    console.log(req.body);
+
+
+
+
+
+
+    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+
+    res.send(data)
+
+
+
+};
+
 

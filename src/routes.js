@@ -17,4 +17,6 @@ module.exports = (app) => {
 
     app.post("/edit/price/:stationId/:productId", stations.editProductPrice);
 
+    app.post("/newstation", stations.saveStation);
+
 };

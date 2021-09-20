@@ -1,95 +1,103 @@
-let data = require("../test-data.json")
+const sqlite3 = require('sqlite3')
+const sqlite = require('sqlite')
 
 
-exports.getAll = (req, res) => {
 
-    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+exports.getStations = async (req, res) => {
 
-    res.send(data)
+    const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })
+
+    const result = await db.all("select * from stations")
+
+    res.send(result)
+};
+
+exports.getProducts = async (req, res) => {
+
+    const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })
+
+    const result = await db.all("select * from products where station_id=?", [req.params.id])
+
+    res.send(result)
 };
 
 
 
-exports.deleteStation = (req, res) => {
+exports.deleteStation = async (req, res) => {
+    console.log("deletestaitons");
 
-    for (let index = data.length - 1; index >= 0; index--) {
-        const element = data[index];
-        if (element.id === req.params.id) {
-            data.splice(index, 1)
-        }
-    }
+    const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })
 
+    await db.all("delete from stations where station_id=?", [req.params.id])
 
-    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+    const stations = await db.all("select * from stations")
 
-    res.send(data)
+    res.send(stations)
 
 };
 
 
 
 
-exports.editStationName = (req, res) => {
-    for (const key in data) {
+exports.editStationName = async (req, res) => {
 
-        const station = data[key];
-        if (station.id === req.params.id) {
-            station.name = req.body.val
-        }
+    const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })
 
-    }
+    await db.all("update stations set name=? where station_id=?", [req.params.id])
 
+    const stations = await db.all("select * from stations")
 
-
-
-    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
-
-    res.send(data)
-
-
-
-};
-
-exports.editProductPrice = (req, res) => {
-
-
-
-    for (const key in data) {
-        const station = data[key];
-        if (station.id === req.params.stationId) {
-            for (const key in station.prices) {
-                const price = station.prices[key];
-                if (price.product_id === req.params.productId) {
-                    price.price = req.body.val
-                }
-
-
-            }
-        }
-
-    }
-
-
-
-    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
-
-    res.send(data)
+    res.send(stations)
 
 
 
 };
 
-exports.saveStation = (req, res) => {
+exports.editProductPrice = async (req, res) => {
+
+    const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })
+
+    await db.all("update products set price=? where station_id=? and product_id=?", [req.body.val, req.params.stationId, req.params.productId])
+
+    const products = await db.all("select * from products where station_id=?", [req.params.stationId])
+
+    res.send(products)
+
+
+
+
+
+};
+
+exports.getPoints = async (req, res) => {
+
+    const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })
+
+    const points = await db.all("select * from points where product_id=?", [req.params.id])
+
+
+
+    res.send(points)
+
+};
+
+exports.saveStation = async (req, res) => {
     console.log(req.body);
 
 
+    const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })
+
+    await db.all("insert into stations(name, address, latitude, longitude) values(?,?,?,?)", [req.body.name, req.body.address, req.body.latitude, req.body.longitude])
 
 
 
+    let products = req.body.products
 
-    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+    await db.all("insert into stations(name, address, latitude, longitude) values(?,?,?,?)", [req.body.name, req.body.address, req.body.latitude, req.body.longitude])
 
-    res.send(data)
+    const stations = await db.all("select * from stations")
+
+    res.send(stations)
 
 
 

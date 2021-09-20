@@ -6,8 +6,12 @@ async function setup() {
     const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })
     await db.migrate({ force: "last", migrationsPath: "./src/db/migrations" })
 
-    const rivenditori = await db.all("select * from rivenditori")
-    console.log(rivenditori);
+    const stations = await db.all("select * from stations")
+    console.log(stations);
+    const products = await db.all("select * from products")
+    console.log(products);
+    const points = await db.all("select * from points")
+    console.log(points);
 }
 
 setup();

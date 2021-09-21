@@ -4,17 +4,17 @@ module.exports = (app) => {
 
     app.get("/stations", auth, stations.getStations);
 
-    app.get("/products/:id", stations.getProducts);
+    app.get("/products/:id", auth, stations.getProducts);
 
-    app.get("/points/:id", stations.getPoints);
+    app.get("/points/:id", auth, stations.getPoints);
 
 
-    app.delete("/delete/:id", stations.deleteStation);
+    app.delete("/delete/:id", auth, stations.deleteStation);
 
-    app.post("/edit/name/:id", stations.editStationName);
+    app.post("/edit/name/:id", auth, stations.editStationName);
 
-    app.post("/edit/price/:stationId/:productId", stations.editProductPrice);
+    app.post("/edit/price/:stationId/:productId", auth, stations.editProductPrice);
 
-    app.post("/newstation", stations.saveStation);
+    app.post("/newstation", auth, stations.saveStation);
 
 };

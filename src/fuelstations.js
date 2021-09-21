@@ -3,6 +3,7 @@ const sqlite = require('sqlite')
 
 
 
+
 exports.getStations = async (req, res) => {
 
     const db = await sqlite.open({ filename: "./mydb.sqlite", driver: sqlite3.Database })

@@ -1,8 +1,8 @@
 module.exports = (app) => {
     const stations = require("./fuelstations.js");
+    const auth = require("./auth.js")
 
-
-    app.get("/stations", stations.getStations);
+    app.get("/stations", auth, stations.getStations);
 
     app.get("/products/:id", stations.getProducts);
 
